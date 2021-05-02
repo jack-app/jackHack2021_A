@@ -21,8 +21,22 @@ height: 60%;
 }
 
 /* Optional: Makes the sample page fill the window. */
-html,
-body {
-height: 100%;
-padding: 40px 10px 0 10px;
+html,body {
+  height: 100%;
+  padding: 40px 10px 0 10px;
+}
+
+@font-face {
+	font-family: 'MyFont';
+	src: url(../font/ikamodoki1_0.ttf);
+}
+
+.ikafont {
+	font-family: MyFont;
+}
+
+.clear-decoration {
+  border: none;
+  outline: none;
+  background: transparent;
 }
