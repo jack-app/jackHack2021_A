@@ -1,26 +1,33 @@
 let map;
 let layers;
+const camps = {
+  1: {
+    color: "#FF0000",
+  },
+  2: {
+    color: "#0037ff",
+  },
+  3: {
+    color: "#00ff3b",
+  },
+}
 
 layers = [
   {
     center: { lat: 35.155725, lng: 136.963427 },
-    population: 50,
-    camp: "#FF0000",
+    camp: 1,
   },
   {
     center: { lat: 35.155725 + 0.0005, lng: 136.963427 },
-    population: 50,
-    camp: "#FF0000",
+    camp: 1,
   },
   {
     center: { lat: 35.155725 + 0.0010, lng: 136.963427 },
-    population: 50,
-    camp: "#FF0000",
+    camp: 1,
   },
   {
     center: { lat: 35.155725 + 0.0015, lng: 136.963427 },
-    population: 50,
-    camp: "#0037ff",
+    camp: 2,
   },
 ];
 
@@ -36,11 +43,11 @@ function initMap() {
       strokeColor: "#ffffff",
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: layer.camp,
+      fillColor: camps[layer.camp].color,
       fillOpacity: 0.8,
       map,
       center: layer.center,
-      radius: layer.population,
+      radius: 50,
     });
   })
 }
@@ -54,11 +61,11 @@ function overlay(layer) {
     strokeColor: "#FF0000",
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#FF0000",
+    fillColor: camps[layer.camp].color,
     fillOpacity: 0.35,
     map,
     center: layer.center,
-    radius: layer.population,
+    radius: 50,
   });
 }
 
