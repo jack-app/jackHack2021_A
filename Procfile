@@ -1,0 +1,1 @@
+web: cd kuroneko/location_db && gunicorn -w 3 -k uvicorn.workers.UvicornWorker main:app
