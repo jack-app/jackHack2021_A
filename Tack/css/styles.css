@@ -5,3 +5,7 @@ body {
 .container {
   max-width: 960px;
 }
+
+.select {
+  padding-top: 5rem;
+}
