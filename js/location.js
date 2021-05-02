@@ -1,3 +1,5 @@
+import ovelay from "./map.js";
+
 function get_location() {
     navigator.geolocation.getCurrentPosition(show_location);
 }
@@ -15,6 +17,8 @@ function show_location(position) {
     var date = new Date(position.timestamp);
 
     geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+
+
 
     alert(geo_text);
 }
