@@ -19,8 +19,10 @@ def get_db():
     finally:
         db.close()
 
-
-
+@app.delete("/camp_encamped_locations/{id}")
+def delete_location(id: int, db: Session = Depends(get_db)):
+    crud.delete_location(db, id)
+    return
 
 @app.get("/camp_encamped_locations/", response_model=List[schemas.Location])
 def read_locations(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
