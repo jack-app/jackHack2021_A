@@ -1,3 +1,5 @@
+// import CampEncampedLocation from "../js/models/camp_encamped_location";
+
 let map;
 let layers;
 const camps = {
@@ -36,6 +38,11 @@ function initMap() {
     center: { lat: 35.155725, lng: 136.963427 },
     zoom: 17,
   });
+
+  // CampEncampedLocation.all().then(data => {
+  //   layers = data
+  // })
+
   // Construct the circle for each value in layers.
   // Note: We scale the area of the circle based on the population.
   layers.forEach(layer => {
