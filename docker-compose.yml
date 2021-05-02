@@ -5,7 +5,7 @@ services:
     build: . 
     command: uvicorn app.main:app --reload --host 0.0.0.0
     volumes:
-      - ./kuroneko/location_db:/app
+      - ./kuroneko/location_db:/app/app
     ports:
       - "8000:8000"
     tty: true
