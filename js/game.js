@@ -24,6 +24,8 @@ const camps = {
 var queryStr = window.location.search.slice(1);
 let cid = queryStr.split("=")[1]
 
+document.cookie = `camp_id=${cid}`;
+
 let color = camps[cid].color
 let campName = camps[cid].name
 let campPicPath = camps[cid].pic_path
@@ -37,5 +39,5 @@ camp.innerText = campName
 var campPic = document.getElementById("camp-pic");
 campPic.src = campPicPath
 
-var campZinti = document.getElementById("camp-zinti");
-campZinti.src = campZintiPath
+// var campZinti = document.getElementById("camp-zinti");
+// campZinti.src = campZintiPath
