@@ -22,12 +22,12 @@ const camps = {
 
 // query 取ってくる
 var queryStr = window.location.search.slice(1);
-let campId = queryStr.split("=")[1]
+let cid = queryStr.split("=")[1]
 
-let color = camps[campId].color
-let campName = camps[campId].name
-let campPicPath = camps[campId].pic_path
-let campZintiPath = camps[campId].zinti_path
+let color = camps[cid].color
+let campName = camps[cid].name
+let campPicPath = camps[cid].pic_path
+let campZintiPath = camps[cid].zinti_path
 
 var camp = document.getElementById("camp");
 camp.style.color = color;
