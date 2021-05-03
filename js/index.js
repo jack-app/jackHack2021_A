@@ -9,3 +9,8 @@ let cid = get_camp()
 if (!!cid) {
   window.location.href = `../game.html?camp_id=${cid}`;
 }
+
+function moveToIndexWithoutCookie() {
+  document.cookie = "camp_id=";
+  window.location.href = '../index.html';
+}
