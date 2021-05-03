@@ -25,7 +25,7 @@ function changeCurrentPosition() {
 function moveCurrentPositionMarker() {
   marker.setMap(null)
   marker = new google.maps.Marker({
-    position: { lat: currentLocation.latitude += 0.0010, lng: currentLocation.longitude += 0.0010 },
+    position: { lat: currentLocation.latitude, lng: currentLocation.longitude },
     map,
   });
 }
@@ -140,37 +140,67 @@ function initMap() {
 // 位置情報を追加して四角形を表示
 function addLayer() {
   // 重なるやつないかチェック
-  if (!overlapOwnCircleExists(currentLocation)) {
-    console.log("tukuruyo")
-    console.log(currentLocation)
-    // ポリゴン描画
-    // writeSquare(currentLocation)
-    writeCircle(currentLocation)
-    campEncampedLocations.push(currentLocation)
+  overlapOwnCircleExists(currentLocation)
+  // if (!overlapOwnCircleExists(currentLocation)) {
+  //   console.log("tukuruyo")
+  //   console.log(currentLocation)
+  //   // ポリゴン描画
+  //   // writeSquare(currentLocation)
+  //   writeCircle(currentLocation)
+  //   campEncampedLocations.push(currentLocation)
 
-    // API叩く
-    save(currentLocation)
-  }
+  //   // API叩く
+  //   save(currentLocation)
+  // }
 }
 
 // 円の重なりチェック
-function overlapOwnCircleExists(camp_encamped_location) {
+async function overlapOwnCircleExists(camp_encamped_location) {
   let flag = false
-  campEncampedLocations.forEach( (cEL, idx) => {
-    console.log(cEL)
-    console.log(Math.abs(cEL.latitude - camp_encamped_location.latitude))
-    console.log(Math.abs(cEL.longitude - camp_encamped_location.longitude) )
-    if (Math.abs(cEL.latitude - camp_encamped_location.latitude) < 0.0010 && Math.abs(cEL.longitude - camp_encamped_location.longitude) < 0.0010) {
-      if (String(cEL.camp_id) != String(camp_encamped_location.camp_id)) {
-        deleteCircle(cEL, idx)
-      } else {
-        flag = true
+  const promise = await new Promise((resolve) => {
+    campEncampedLocations.forEach( (cEL, idx) => {
+      console.log(cEL)
+      console.log(Math.abs(cEL.latitude - camp_encamped_location.latitude))
+      console.log(Math.abs(cEL.longitude - camp_encamped_location.longitude) )
+      if (Math.abs(cEL.latitude - camp_encamped_location.latitude) < 0.0010 && Math.abs(cEL.longitude - camp_encamped_location.longitude) < 0.0010) {
+        if (String(cEL.camp_id) != String(camp_encamped_location.camp_id)) {
+          deleteCircle(cEL, idx)
+        } else {
+          flag = true
+        }
+        console.log(flag)
       }
-      console.log(flag)
+    })
+    // 引数に文字列を渡す
+    resolve(flag);
+  }).then((val) => {
+    // 第一引数にて、resolve関数で渡した文字列を受け取ることができる
+    console.log(val)
+    if (!val) {
+      // ポリゴン描画
+      // writeSquare(currentLocation)
+      writeCircle(currentLocation)
+      campEncampedLocations.push(currentLocation)
+
+      // API叩く
+      save(currentLocation)
     }
-  })
-  console.log(flag)
-  return flag
+  });
+  // campEncampedLocations.forEach( (cEL, idx) => {
+  //   console.log(cEL)
+  //   console.log(Math.abs(cEL.latitude - camp_encamped_location.latitude))
+  //   console.log(Math.abs(cEL.longitude - camp_encamped_location.longitude) )
+  //   if (Math.abs(cEL.latitude - camp_encamped_location.latitude) < 0.0010 && Math.abs(cEL.longitude - camp_encamped_location.longitude) < 0.0010) {
+  //     if (String(cEL.camp_id) != String(camp_encamped_location.camp_id)) {
+  //       deleteCircle(cEL, idx)
+  //     } else {
+  //       flag = true
+  //     }
+  //     console.log(flag)
+  //   }
+  // })
+  // console.log(flag)
+  // return flag
 }
 
 // 円を表示
@@ -182,7 +212,7 @@ function writeCircle(layer) {
     fillColor: campColors[layer.camp_id].color,
     fillOpacity: 0.8,
     map,
-    center: { lat: layer.latitude, lng: layer.longitude },
+    center: { lat: layer.latitude, lng: layer.longitude},
     radius: 50,
   });
   layer.circle = cityCircle
@@ -221,19 +251,19 @@ function deleteCircle(layer, deleteIdx) {
 
 
 async function all() {
-  let resp = await fetch(`https://offlatoon.herokuapp.com/camp_encamped_locations`, {mode: 'cors'})
+  let resp = await fetch(`http://localhost:8000/camp_encamped_locations`, {mode: 'cors'})
   return resp.json()
 }
 
 function save(camp_encamped_location) {
   // credential周り設定したほうが良さそう。
   delete camp_encamped_location.circle
-  fetch( 'https://offlatoon.herokuapp.com/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
+  fetch( 'http://localhost:8000/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
   .then(resp => console.log(resp))
 }
 
 function deleteCEL(id) {
   // credential周り設定したほうが良さそう。
-  fetch( `https://offlatoon.herokuapp.com/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
+  fetch( `http://localhost:8000/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
   .then(resp => console.log(resp))
 }
