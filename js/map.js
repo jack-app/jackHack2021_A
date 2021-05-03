@@ -251,19 +251,19 @@ function deleteCircle(layer, deleteIdx) {
 
 
 async function all() {
-  let resp = await fetch(`http://localhost:8000/camp_encamped_locations`, {mode: 'cors'})
+  let resp = await fetch(`https://offlatoon.herokuapp.com/camp_encamped_locations`, {mode: 'cors'})
   return resp.json()
 }
 
 function save(camp_encamped_location) {
   // credential周り設定したほうが良さそう。
   delete camp_encamped_location.circle
-  fetch( 'http://localhost:8000/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
+  fetch( 'https://offlatoon.herokuapp.com/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
   .then(resp => console.log(resp))
 }
 
 function deleteCEL(id) {
   // credential周り設定したほうが良さそう。
-  fetch( `http://localhost:8000/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
+  fetch( `https://offlatoon.herokuapp.com/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
   .then(resp => console.log(resp))
 }
