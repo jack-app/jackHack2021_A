@@ -25,6 +25,7 @@ var queryStr = window.location.search.slice(1);
 let cid = queryStr.split("=")[1]
 
 document.cookie = `camp_id=${cid}`;
+console.log(document.cookie)
 
 let color = camps[cid].color
 let campName = camps[cid].name
