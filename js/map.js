@@ -254,20 +254,20 @@ function deleteCircle(layer, deleteIdx) {
 
 
 async function all() {
-  let resp = await fetch(`https://a6a5ddefb7f9.ngrok.io/camp_encamped_locations`, {mode: 'cors'})
+  let resp = await fetch(`https://3a517da45c19.ngrok.io/camp_encamped_locations`, {mode: 'cors'})
   return resp.json()
 }
 
 function save(camp_encamped_location) {
   // credential周り設定したほうが良さそう。
   delete camp_encamped_location.circle
-  fetch( 'https://a6a5ddefb7f9.ngrok.io/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
+  fetch( 'https://3a517da45c19.ngrok.io/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
   .then(resp => console.log(resp))
 }
 
 function deleteCEL(id) {
   // credential周り設定したほうが良さそう。
   if (String(id) == "0") { return }
-  fetch( `https://a6a5ddefb7f9.ngrok.io/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
+  fetch( `https://3a517da45c19.ngrok.io/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
   .then(resp => console.log(resp))
 }

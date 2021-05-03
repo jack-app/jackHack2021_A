@@ -41,12 +41,12 @@ def delete_location(id: int, db: Session = Depends(get_db)):
     crud.delete_location(db, id)
     return
 
-@app.get("/camp_encamped_locations/", response_model=List[schemas.Location])
+@app.get("/camp_encamped_locations", response_model=List[schemas.Location])
 def read_locations(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     locations = crud.get_locations(db, skip=skip, limit=limit)
     return locations
 
-@app.post("/camp_encamped_locations/", response_model=schemas.Location)
+@app.post("/camp_encamped_locations", response_model=schemas.Location)
 def create_location(location: schemas.LocationCreate, db: Session = Depends(get_db)):
     print(location)
     return crud.create_location(db=db, location=location)
