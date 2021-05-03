@@ -5,7 +5,7 @@ function get_camp(){
   var id = cookie_list.split('=')[1];
   return id;
 } 
-console.log(get_camp)
-if (!!get_camp()) {
-  window.location.href = '../game.html';
+let cid = get_camp()
+if (!!cid) {
+  window.location.href = `../game.html?camp_id=${cid}`;
 }
