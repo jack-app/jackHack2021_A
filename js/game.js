@@ -42,3 +42,8 @@ campPic.src = campPicPath
 
 // var campZinti = document.getElementById("camp-zinti");
 // campZinti.src = campZintiPath
+
+function moveToIndexWithoutCookie() {
+  document.cookie = "camp_id=";
+  window.location.href = 'index.html';
+}

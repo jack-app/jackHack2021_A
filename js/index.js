@@ -12,5 +12,5 @@ if (!!cid) {
 
 function moveToIndexWithoutCookie() {
   document.cookie = "camp_id=";
-  window.location.href = '../index.html';
+  window.location.href = 'index.html';
 }
