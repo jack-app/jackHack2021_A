@@ -3,12 +3,15 @@ let marker
 // query 取ってくる
 const campId = window.location.search.slice(1).split("=")[1]
 
+let time = 0
+
 let currentLocation = { latitude: 0, longitude: 0, camp_id: campId}
 
 function changeCurrentPosition() {
+  time++
   navigator.geolocation.getCurrentPosition(function location(position) {
-    currentLocation.latitude = position.coords.latitude;
-    currentLocation.longitude = position.coords.longitude;
+    currentLocation.latitude = position.coords.latitude + 0.001;
+    currentLocation.longitude = position.coords.longitude + 0.001;
     console.log("初期位置")
     console.log(currentLocation)
     var result = new Promise(function(resolve) {
@@ -124,7 +127,7 @@ function initMap() {
     marker = new google.maps.Marker({
       position: { lat: currentLocation.latitude, lng: currentLocation.longitude },
       map,
-    });
+    }); 
 
     campEncampedLocations.forEach(layer => {
       // writeSquare(layer)
@@ -162,7 +165,7 @@ async function overlapOwnCircleExists(camp_encamped_location) {
       console.log(cEL)
       console.log(Math.abs(cEL.latitude - camp_encamped_location.latitude))
       console.log(Math.abs(cEL.longitude - camp_encamped_location.longitude) )
-      if (Math.abs(cEL.latitude - camp_encamped_location.latitude) < 0.0010 && Math.abs(cEL.longitude - camp_encamped_location.longitude) < 0.0010) {
+      if (Math.abs(cEL.latitude - camp_encamped_location.latitude) < 0.0009 && Math.abs(cEL.longitude - camp_encamped_location.longitude) < 0.0009) {
         if (String(cEL.camp_id) != String(camp_encamped_location.camp_id)) {
           deleteCircle(cEL, idx)
         } else {
@@ -251,19 +254,20 @@ function deleteCircle(layer, deleteIdx) {
 
 
 async function all() {
-  let resp = await fetch(`https://offlatoon.herokuapp.com/camp_encamped_locations`, {mode: 'cors'})
+  let resp = await fetch(`http://42f1c748675f.ngrok.io/camp_encamped_locations`, {mode: 'cors'})
   return resp.json()
 }
 
 function save(camp_encamped_location) {
   // credential周り設定したほうが良さそう。
   delete camp_encamped_location.circle
-  fetch( 'https://offlatoon.herokuapp.com/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
+  fetch( 'http://42f1c748675f.ngrok.io/camp_encamped_locations', { method: "POST", body: JSON.stringify(camp_encamped_location), mode: "cors" } )
   .then(resp => console.log(resp))
 }
 
 function deleteCEL(id) {
   // credential周り設定したほうが良さそう。
-  fetch( `https://offlatoon.herokuapp.com/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
+  if (String(id) == "0") { return }
+  fetch( `http://42f1c748675f.ngrok.io/camp_encamped_locations/${id}`, { method: "DELETE", mode: "cors" } )
   .then(resp => console.log(resp))
 }
